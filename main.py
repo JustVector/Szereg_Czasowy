@@ -8,6 +8,7 @@ data_file_name: str = ""
 time_stamp_list: list = []
 values_list: list = []
 
+
 # GUI data operations - "command" functions
 def pass_file_name(text:str):
     """
@@ -22,6 +23,7 @@ def pass_file_name(text:str):
     commit_file_name_button = tk.Button(root, text="zatwierdź nazwę pliku i sprawdź zawartość",
                               command=load_file_data)
     commit_file_name_button.pack()                                                # Load Data from csv file if name is approve
+
 
 def load_file_data():
     global time_stamp_list, values_list
