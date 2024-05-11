@@ -2,7 +2,7 @@
 
 
 def srednia_ruchoma(data_list:list, set_size:int ):
-    """Funkcja przetwarzająca poaną listę data_list na ciąg liczb (float)
+    """Funkcja przetwarzająca podaną listę data_list na ciąg liczb (float)
      które odpowiadja średniej kolejnych n(=set_size) liczb z listy
      data_list:list = przyjmuje listę wartości (np z ciagu czasowego
      set_size:int = przyjmuje ilość kolejnych liczb z których ma być liczona średnia. MUSI BYĆ NIEPARZYSTA
