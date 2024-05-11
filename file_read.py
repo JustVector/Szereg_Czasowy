@@ -4,6 +4,7 @@ import csv
 def read_csv(file_title: str):
     """
     Function reading csv files and write them into lists (one column, one list)
+    in case of err, Exception is printed in :msg variable
     :parameter file_title: str - name of file with data. NOTE it's must be in script directory
     :returns (headers_list, values_columns_list, msg)
     """
@@ -35,7 +36,7 @@ def read_csv(file_title: str):
         msg = "błąd w trakcie wczytwywania danych: FileNotFoundError "
         return None, None, msg
     except Exception as err:
-        msg = "błąd w trakcie wczytwywania danych" + str(err)
+        msg = "błąd w trakcie wczytwywania danych: " + str(err)
         return None, None, msg
 
     return headers_list, values_columns_list, msg
