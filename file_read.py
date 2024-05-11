@@ -11,13 +11,19 @@ def read_csv(file_title: str):
     time_stamp_list = []
     values_list = []
 
-    with open(file_title, newline='') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',')
-        for row in reader:
-            time_stamp_list.append(row[0])
-            values_list.append(row[1])
+    try:
+        with open(file_title, newline='') as csvfile:
+            reader = csv.reader(csvfile, delimiter=',')
+            for row in reader:
+                time_stamp_list.append(row[0])
+                values_list.append(row[1])
+        msg = "wczytano dane"
 
-    return time_stamp_list, values_list
+    except:
+        msg = "błąd w trakcie wczytwywania danych"
+        return None, None, msg
+
+    return time_stamp_list, values_list, msg
 
 
 if __name__ == '__main__':
