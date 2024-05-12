@@ -1,7 +1,9 @@
 # Szereg_Czasowy
 Szybki Init_file i wszystko co trzeba wiedzieć o projekcie:
 
-.
+*paczki/moduły:
+1. csv
+2. tkinter as tk
 .
 .
 
