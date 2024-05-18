@@ -3,13 +3,13 @@ import file_read
 import tkinter as tk
 
 
-# User-defined data form GUI and global variables
+# User-defined data from GUI and global variables $$$tu masz zmienne które musisz przekazać jako global do funkcji rysującej wykres.
 data_file_name: str = ""
 headers_list: list = []
 columns_list: list = []
 
 
-# GUI data operations - "command" functions
+# GUI data operations - "command" functions  $$$ Poczytaj o zastosowaniu funkcji anonimowej lambda w TKinter
 def pass_file_name(text: str):
     """
     command from submit_file_name_button
@@ -38,9 +38,9 @@ def load_file_data():
     for column in columns_list:
         first_line += "{" + str(column[1]) + "}/"
     data_first_record_test_msg: str = first_line + "\n"
-    data_first_record_test.config(text=data_first_record_test_msg)              # show first record data
+    data_first_record_test.config(text=data_first_record_test_msg)              # show first record from data on the screen
 
-    axis_X_choices_msg.config(state="normal")
+    axis_X_choices_msg.config(state="normal")                                    
     column_X_entry.config(state="normal")
     column_X_entry.insert(0, "wybierz wartości na oś X")
     column_Y_entry.config(state="normal")
@@ -50,6 +50,10 @@ def load_file_data():
 
 
 def validate_axis_bool(entry: str):
+    """
+    Function for validation of headers provided by user
+    :return true if entry is in headers list, and false in other cases
+    """
     global headers_list
     if entry in headers_list:
         return True
@@ -58,6 +62,9 @@ def validate_axis_bool(entry: str):
 
 
 def validate_axis_entry():
+    """
+    
+    """
     x_status = validate_axis_bool(column_X_entry.get())
     y_status = validate_axis_bool(column_Y_entry.get())
 
