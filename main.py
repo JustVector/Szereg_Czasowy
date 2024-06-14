@@ -1,12 +1,13 @@
-import avg_creator
 import file_read
 import tkinter as tk
+import plot
 
 
 # User-defined data from GUI and global variables $$$tu masz zmienne które musisz przekazać jako global do funkcji rysującej wykres.
-data_file_name: str = ""
+
 headers_list: list = []
 columns_list: list = []
+x_axis_data, y_axis_data = [], []
 
 
 # GUI data operations - "command" functions  $$$ Poczytaj o zastosowaniu funkcji anonimowej lambda w TKinter
@@ -16,7 +17,6 @@ def pass_file_name(text: str):
     After passing correct name, unlock next button, allowing reading data from passed file
     :param text: user input from file_name_text_field
     """
-    global data_file_name
     data_file_name = text
     first_label.config(text="teraz plik nazywa się: " + data_file_name)
     commit_file_name_button.config(state="active")
@@ -65,8 +65,13 @@ def validate_axis_entry():
     """
     
     """
-    x_status = validate_axis_bool(column_X_entry.get())
-    y_status = validate_axis_bool(column_Y_entry.get())
+    global headers_list, columns_list, x_axis_data, y_axis_data
+
+    x_axis_column: str = column_X_entry.get()
+    y_axis_column: str = column_Y_entry.get()
+
+    x_status = validate_axis_bool(x_axis_column)
+    y_status = validate_axis_bool(y_axis_column)
 
     if x_status and y_status is not True:
         axis_err = tk.Label(root, text="there is no header like these in file", font=20, fg='black')
@@ -75,7 +80,9 @@ def validate_axis_entry():
         print_plt_button.config(state="active")
         set_size_msg.config(state="active")
         set_size_entry.config(state="normal")
-        set_size_entry.insert(0, "podaj n.parzystą liczbę naturalną")
+        set_size_entry.insert(0, "podaj liczbę naturalną")
+        x_axis_data, x_data_msg = file_read.get_data_from_column_list(x_axis_column, headers_list, columns_list, False)
+        y_axis_data, y_data_msg = file_read.get_data_from_column_list(y_axis_column, headers_list, columns_list, True)
 
 
 def reset_axis_name():
@@ -83,6 +90,17 @@ def reset_axis_name():
     column_X_entry.insert(0, "wybierz wartości na oś X")
     column_Y_entry.delete(0, len(column_Y_entry.get()))
     column_Y_entry.insert(0, "wybierz wartości na oś Y")
+
+
+def print_plt_figure():
+    size = 1
+    try:
+        size = int(set_size_entry.get())
+    except ValueError:
+        set_size_entry.insert(0, " podano niecałkowitą liczbę")
+        return
+    finally:
+        plot.print_plot(x_axis_data, y_axis_data, size)
 
 
 # Main window configuration
@@ -142,7 +160,7 @@ reset_axis_name_button = tk.Button(root, text="zresetuj pola kolumn", command=re
 reset_axis_name_button.pack()
 
 # Entry for avg_creator configuration
-set_size_msg = tk.Label(root, text="określ ile kolejnych pomiarów ma być sumowanych do średniej ruchomej\npodana liczba musi być naturalna i nieparzysta",
+set_size_msg = tk.Label(root, text="określ ile kolejnych pomiarów ma być sumowanych do średniej ruchomej",
                         font=16, fg='black', state="disabled")
 
 set_size_msg.pack()
@@ -151,7 +169,8 @@ set_size_entry = tk.Entry(root, width=50, state="disabled")
 set_size_entry.pack()
 
 # button to print plot of data
-print_plt_button = tk.Button(root, text="generuj wykres wg. kolumn", command=lambda: print("OK"), state="disabled")
+print_plt_button = tk.Button(root, text="generuj wykres wg. kolumn", command=print_plt_figure,
+                             state="disabled")
 print_plt_button.pack()
 
 root.mainloop()

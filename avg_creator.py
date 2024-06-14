@@ -43,6 +43,15 @@ def srednia_ruchoma(data_list:list, set_size:int ):
         return avg_list
 
 
+def dostosuj_znaczniki(time_stamps: list, set_size: int):
+    """if any time stamp item is doubled - it will be a mess"""
+    set_range: int = set_size//2
+
+    for index in range(-set_range, set_range):
+        time_stamps.pop(index)
+    return time_stamps
+
+
 if __name__ == '__main__':
     data = [112, 124, 322, 45, 324, 223, 234, 233, 535, 353, 535, 334, 531, 241]
     set_size: int = 5

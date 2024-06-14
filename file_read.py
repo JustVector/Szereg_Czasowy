@@ -42,8 +42,33 @@ def read_csv(file_title: str):
     return headers_list, values_columns_list, msg
 
 
+def get_data_from_column_list(header: str, headers_list: list, columns_list: list, value: bool = False):
+    data: list = []
+    msg: str = ""
+    float_status: bool = value
+
+    data_indeks = headers_list.index(header)
+    file_data: list = columns_list[data_indeks]
+    file_data.pop(0)
+    print(file_data)
+
+    if float_status == 1:
+        for value in file_data:
+            try:
+                data.append(float(value))
+            except ValueError:
+                print(value, ": zastąpiono wartością zerową \n")
+                data.append(0)
+        msg += f"przetwarzanie danych z pliku zakończone sukcesem dla kolumny {header}\n"
+    else:
+        msg = f"nie przetwarzano danych z pliku dla kolumny {header}\n"
+        data = file_data
+
+    return data, msg
+
+
 if __name__ == '__main__':
     file_name: str = 'test_csv.csv'
     col1, col_list, commit = read_csv(file_name)
     print(commit)
-    print(col1,"\n", col_list)
+    print(col1, "\n", col_list)
