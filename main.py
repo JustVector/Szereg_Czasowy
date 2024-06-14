@@ -80,7 +80,7 @@ def validate_axis_entry():
         print_plt_button.config(state="active")
         set_size_msg.config(state="active")
         set_size_entry.config(state="normal")
-        set_size_entry.insert(0, "podaj liczbę naturalną")
+        set_size_entry.insert(0, "podaj liczbę naturalną mniejszą niż 10")
         x_axis_data, x_data_msg = file_read.get_data_from_column_list(x_axis_column, headers_list, columns_list, False)
         y_axis_data, y_data_msg = file_read.get_data_from_column_list(y_axis_column, headers_list, columns_list, True)
 
@@ -96,11 +96,15 @@ def print_plt_figure():
     size = 1
     try:
         size = int(set_size_entry.get())
+        set_size_entry.delete(0, 50)
+        if size > 10:
+            set_size_entry.insert(0, " podano za wysoką liczbę")
+            return
+        else:
+            plot.print_plot(x_axis_data, y_axis_data, size)
     except ValueError:
         set_size_entry.insert(0, " podano niecałkowitą liczbę")
         return
-    finally:
-        plot.print_plot(x_axis_data, y_axis_data, size)
 
 
 # Main window configuration
